@@ -20,3 +20,11 @@ select * from author order by name desc;
 -- order by 멀티 : 먼저 쓴 컬럼 우선정렬, asc/desc 생략 시 asc 적용
 select author order by name, email desc; -- name으로 오름차순 후 email로 내림차순 적용
 select author order by name desc, email desc; -- name도 내림차순 적용하고 싶으면 뒤에 desc 넣어줘야 함
+
+--  limit number : 특정 숫자로 결과값 개수 제한
+select * from author order by id desc limit 2;
+
+-- alias를 이용한 select문
+select name as 이름, email from author; --name속성이 이름이라는 문자로 출력됨(as 생략가능)
+select name, email from author as a; -- 테이블에도 as 가능
+
