@@ -1,11 +1,26 @@
 -- 테이블에 새로운 레코드 추가(INSERT)
 insert into author(id, name, email) values(1, 'kim', 'abc@naver.com');
 INSERT INTO post(id, title, contents, author_id) VALUES (1, '가', '하하', 1);
+
+
 -- 테이블의 레코드 내용을 수정(UPDATE)
 update author set email='abc2@test.com' where id=1;
 update post set author_id = null where author_id is not null;
+-- author 데이터 중 id가 4인 데이터를 email을 abc@naver.com, name을 abc로 변경
+update author set email='abc@naver.com', name='abc' where id=4;
+
+
 -- 테이블의 데이터 삭제(DELETE)
 delete from author where id=2;
+
+-- post에 글쓴적이 있는 author 데이터 1개 삭제 -> 에러 -> 조치 후 삭제
+-- 방법 1
+delete from post where author_id = 2;
+delete from author where id = 2;
+-- 방법 2
+update post set author_id = null where author_id = 2;
+delete from author where id = 2;
+
 
 -- 테이블의 데이터 조회(SELECT)
 select * from author where id=1;
@@ -52,6 +67,12 @@ SELECT * FROM author WHERE name LIKE ‘%동%’; -- 동이 들어가는 문자
 -- 정규표현식 패턴 연산(REGEXP)
 SELECT * FROM author WHERE name REGEXP ‘[a-z]’; -- a~z까지를 포함한 문자
 SELECT * FROM author WHERE name REGEXP ‘[가-힣]’; -- 한글이 들어있는 문자
+
+-- 이미지 파일을 이진 데이터로 레코드 저장
+create table table_blob(id int, myimg longblob);
+insert into table_blob (id, myimg) values (1, load_file('C:\\test_picture.jpg'));
+select * from table_blob; -- blob으로 조회됨
+select hex(myimg) from table_blob where id = 1; -- 16진수로 조회됨
 
 -- TYPE 변환(정수 값을 DATE 타입으로 변환)
 SELECT CAST(20200101 AS DATE); -- CAST

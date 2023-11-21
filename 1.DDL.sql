@@ -15,17 +15,25 @@ CREATE TABLE author(
     role VARCHAR(50), 
     address VARCHAR(255), 
     PRIMARY KEY(id));
+
+-- post 테이블 신규 생성
+CREATE TABLE post(
+    id INT PRIMARY KEY, 
+    title VARCHAR(255), 
+    contents VARCHAR(3000), 
+    author_id INT, 
+    FOREIGN KEY(author_id) REFERENCES author(id));
+
 -- 테이블 목록 조회
 SHOW TABLES;
+
 -- 테이블 컬럼조회
 DESCRIBE author;
--- post 테이블 신규 생성
-CREATE TABLE post(id INT PRIMARY KEY, title VARCHAR(255), contents VARCHAR(3000), author_id INT, FOREIGN KEY(author_id) REFERENCES author(id));
 
 --  테이블 컬럼 상세 조회
 SHOW FULL COLUMNS FROM author;
 
--- 테이블 생성문 조회 ( 중간에 ALTER하다보면 변경이 많이 돼서 마지막에 라이브서버에 올릴 때의 편리함을 위해 사용)
+-- 테이블 생성문 조회 ( 중간에 ALTER하다보면 변경이 많이 돼서 마지막에 라이브서버에 올릴 때의 편리함을 위해 사용, 제약조건 확인도 가능)
 SHOW CREATE TABLE posts;
 -- CREATE TABLE `posts` (
 --    `id` int(11) NOT NULL,
@@ -76,7 +84,6 @@ ALTER TABLE author DROP CONSTRAINT email;
 
 -- 인덱스 제거
 ALTER TABLE post DROP INDEX author_id; -- 외래키 제약조건 삭제 시 인덱스는 남기 때문에 따로 삭제를 해줘야 함
-
 
 -- 데이터베이스 삭제
 DROP DATABASE board;
